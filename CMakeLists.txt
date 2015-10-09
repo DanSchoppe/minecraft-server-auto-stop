@@ -1,6 +1,9 @@
 cmake_minimum_required (VERSION 3.0.2)
 project(minecraft-server-stop)
 
+# Compiler flags
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
+
 # Version number
 set (VERSION_MAJOR 1)
 set (VERSION_MINOR 0)
