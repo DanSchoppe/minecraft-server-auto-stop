@@ -1,16 +1,18 @@
-# minecraft-server-auto-stop
+# minecraft-server-stop
 A simple C++ program to automatically stop my EC2 Minecraft server
 
-## Prerequisits
+## Prerequisites
 * Minimum CMake version 3.0.2
 * Sets compile flag -Wall and -std=c++11 in CMakeLists.txt
 
 ## Build
-```cd [project_dir]
+```
+cd [project_dir]
 mkdir build
 cd build
 cmake ..
-make```
+make
+```
 
 ## Notes
 * No make install at this point
