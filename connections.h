@@ -6,7 +6,7 @@
 #include <regex>
 #include <string>
 
-static int connections(std::string path, std::string port) {
+static int connections(std::string path, std::string port, int verbosity) {
   std::ifstream tcp6(path.data());
 
   if (!tcp6.is_open()) {
@@ -25,17 +25,21 @@ static int connections(std::string path, std::string port) {
   while(std::getline(tcp6, line)) {
     if (!std::regex_match(line, groups, reg)) continue;
     if (groups.size() != 5) continue;
-    ret = true;
-
-    // Note: groups[0] contains full line
-    std::cout << "Match: " << groups[0] <<std::endl;
 
     int i = 0;
     loc_addr = groups[++i]; loc_port = groups[++i];
     rem_addr = groups[++i]; rem_port = groups[++i];
 
-    std::cout << "Local:  " << loc_addr << ":" << loc_port << std::endl;
-    std::cout << "Remote: " << rem_addr << ":" << rem_port << std::endl;
+    if (rem_addr == "00000000000000000000000000000000")
+      continue;
+
+    ret = true;
+    // Note: groups[0] contains full line
+    if (verbosity > 1) {
+      std::cout << "Match: " << groups[0] <<std::endl;
+      std::cout << "Local:  " << loc_addr << ":" << loc_port << std::endl;
+      std::cout << "Remote: " << rem_addr << ":" << rem_port << std::endl;
+    }
   }
 
   tcp6.close();

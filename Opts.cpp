@@ -12,23 +12,24 @@ int Opts::getopt(int argc, char* argv[]) {
     static struct option long_options[] =
       {
         /* These options set a flag. */
-        {"verbose", no_argument,       &verbose_flag, 1},
-        {"brief",   no_argument,       &verbose_flag, 0},
+        // {"verbose", no_argument,       &verbose_flag, 1},
+        // {"brief",   no_argument,       &verbose_flag, 0},
         /* These options don’t set a flag.
            We distinguish them by their indices. */
         // {"add",     no_argument,       0, 'a'},
-        {"interval", required_argument, 0, 'i'},
-        {"timeout",  required_argument, 0, 't'},
-        {"port",     required_argument, 0, 'p'},
-        {"file",     required_argument, 0, 'f'},
-        {"url",      required_argument, 0, 'u'},
-        {0,          0,                 0,  0 }
+        {"verbosity", required_argument, 0, 'v'},
+        {"interval",  required_argument, 0, 'i'},
+        {"timeout",   required_argument, 0, 't'},
+        {"port",      required_argument, 0, 'p'},
+        {"file",      required_argument, 0, 'f'},
+        {"url",       required_argument, 0, 'u'},
+        {0,           0,                 0,  0 }
       };
 
     /* getopt_long stores the option index here. */
     int option_index = 0;
 
-    c = getopt_long(argc, argv, "q:t:p:f:u:i:",
+    c = getopt_long(argc, argv, "q:t:p:f:u:i:v:",
                     long_options, &option_index);
 
     /* Detect the end of the options. */
@@ -45,9 +46,14 @@ int Opts::getopt(int argc, char* argv[]) {
       printf ("\n");
       break;
 
+    case 'v':
+      verbosity = atoi(optarg);
+      printf("option -v with value `%d'\n", verbosity);
+      break;
+
     case 'i':
       interval = atoi(optarg);
-      printf("option -q with value `%d'\n", interval);
+      printf("option -i with value `%d'\n", interval);
       break;
 
     case 't':

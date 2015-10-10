@@ -44,27 +44,44 @@ int main(int argc, char* argv[]) {
   ServerState state = ServerState::Empty;
 
   for (;;) {
-    if (connections(opts.file, opts.port)) {
-      std::cout << "Connected clients detected" << std::endl;
+    if (connections(opts.file, opts.port, opts.verbosity)) {
+      switch (state) {
+
+      case ServerState::Full:
+        if (opts.verbosity > 1)
+          std::cout << "Connected clients detected" << std::endl;
+        break;
+
+      case ServerState::Empty:
+        if (opts.verbosity > 0)
+          std::cout << "Connected clients detected" << std::endl;
+        break;
+      }
       state = ServerState::Full;
+
     } else {
       switch (state) {
+
       case ServerState::Full:
-        std::cout << "All clients have disconnected" << std::endl;
+        if (opts.verbosity > 0)
+          std::cout << "All clients have disconnected" << std::endl;
         start = steady_clock::now();
-        state = ServerState::Empty;
         break;
+
       case ServerState::Empty:
-        std::cout << "No clients detected" << std::endl;
+        if (opts.verbosity > 1)
+          std::cout << "No clients detected" << std::endl;
         if (steady_clock::now() - start > std::chrono::seconds(opts.timeout)) {
-          std::cout << "Shutting down the server" << std::endl;
+          if (opts.verbosity > 0)
+            std::cout << "Shutting down the server" << std::endl;
           // TODO: Real networking instead of system()
-          std::string wget = "wget " + opts.url;
+          std::string wget = "wget -qO- " + opts.url + " &> /dev/null";
           std::system(wget.data());
           return 0;
         }
         break;
       }
+      state = ServerState::Empty;
     }
     sleep_for(seconds(opts.interval));
   }

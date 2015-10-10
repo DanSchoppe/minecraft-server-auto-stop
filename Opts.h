@@ -7,7 +7,8 @@ class Opts {
 public:
   int getopt(int argc, char* argv[]);
 
-  int verbose_flag;   // set by ‘--verbose’
+  // int verbose_flag;   // set by ‘--verbose’
+  int verbosity = 1;
   std::string file = "/proc/net/tcp6";
   std::string port = "63DD";
   int timeout = 30;
