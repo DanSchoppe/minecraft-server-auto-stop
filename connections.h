@@ -20,7 +20,6 @@ static int connections(std::string path, std::string port) {
 
   //                              local addr          port         remote addr    port
   std::regex reg(R"(\s*[0-9]+:\s*([0-9a-fA-F]+):()" + port + R"()\s+([0-9a-fA-F]+):([0-9a-fA-F]+).*)");
-    //std::regex reg(R"(\s*[0-9]+:\s*([0-9a-fA-F]+):)(" + port + ")\s+([0-9a-fA-F]+):([0-9a-fA-F]+).*)");
   std::smatch groups;
   bool ret = false;
   while(std::getline(tcp6, line)) {

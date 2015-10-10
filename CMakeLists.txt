@@ -18,4 +18,5 @@ configure_file (
 include_directories("${PROJECT_BINARY_DIR}")
 
 # Executable
-add_executable(minecraft-server-stop main.cpp)
+file(GLOB sources . *.cpp)
+add_executable(minecraft-server-stop ${sources})

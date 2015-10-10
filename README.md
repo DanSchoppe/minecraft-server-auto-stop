@@ -16,4 +16,4 @@ make
 
 ## Notes
 * No make install at this point
-* cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=1 to generate compile_commands.json for libclang consumption
+* `cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=1` to generate compile_commands.json for libclang consumption
